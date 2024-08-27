@@ -20,7 +20,7 @@ void printTrig(int *trig_arr, size_t trig_rows) {
     size_t row_len = y + 1;
 
     for (size_t x = 0; x < row_len; x++) {
-      printf("%d ", getElement(trig_arr, trig_rows, x, y));
+      printf("%4d ", getElement(trig_arr, trig_rows, x, y));
     }
 
     printf("\n");
