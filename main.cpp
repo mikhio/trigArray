@@ -2,20 +2,26 @@
 #include <assert.h>
 #include "TrigArri.h"
 
+
 int main(int argc, char **argv) {
-  int data[] = {
-    10,
-    20, 30,
-    40, 50, 60,
-    70, 80, 90, 100,
-    70, 80, 90, 100, 200
-  };
-  size_t data_rows = 6;
 
-  TrigArri trig_arr = {};
-  createTrig(&trig_arr, data, data_rows);
+  TrigArri trig_arr1 = {};
+  TrigArri trig_arr2 = {};
 
-  printTrig(&trig_arr);
+  createTrig(&trig_arr1, 5, NULL);
+  createTrig(&trig_arr2, 5, NULL);
+
+  initRandomTrig(&trig_arr1, 1);
+
+  printTrig(&trig_arr1);
+  printTrig(&trig_arr2);
+
+  getNegTrig(&trig_arr1, &trig_arr2);
+
+  printTrig(&trig_arr2);
+
+  deleteTrig(&trig_arr1);
+  deleteTrig(&trig_arr2);
 
   return 0;
 }

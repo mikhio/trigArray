@@ -1,18 +1,24 @@
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 #include <assert.h>
 #include "TrigArri.h"
 
 //--------------------------------------------------------------------------------
 
-void createTrig(TrigArri *trig_arr, const int *data, size_t rows) {
+void createTrig(TrigArri *trig_arr, size_t rows, const int *data) {
   assert(trig_arr);
-  assert(data);
 
   trig_arr->data = (int*) calloc(GET_ARR_LEN(rows), sizeof(int));
   trig_arr->rows = rows;
 
-  for (size_t i = 0; i < GET_ARR_LEN(rows); i++)
-    trig_arr->data[i] = data[i];
+  if (data != NULL) {
+    for (size_t i = 0; i < GET_ARR_LEN(rows); i++)
+      trig_arr->data[i] = data[i];
+  } else {
+    for (size_t i = 0; i < GET_ARR_LEN(rows); i++)
+      trig_arr->data[i] = 0;
+  }
 }
 
 void deleteTrig(TrigArri *trig_arr) {
@@ -20,6 +26,19 @@ void deleteTrig(TrigArri *trig_arr) {
 
   trig_arr->rows = 0;
   free(trig_arr->data);
+}
+
+//--------------------------------------------------------------------------------
+
+void initRandomTrig(TrigArri *trig_arr, int seed_num) {
+  assert(trig_arr);
+  assert(trig_arr->data);
+
+  srand(time(NULL) + seed_num);
+  
+  for (int i = 0; i < GET_ARR_LEN(trig_arr->rows); i++) {
+    trig_arr->data[i] = rand() % 10;
+  }
 }
 
 //--------------------------------------------------------------------------------
@@ -68,4 +87,63 @@ void printTrig(const TrigArri *trig_arr) {
   for (int i = 0; i < row_len; i++)
     printf("+ -- ");
   printf("+\n");
+}
+
+//--------------------------------------------------------------------------------
+
+
+void getNegTrig(const TrigArri *src_trig, TrigArri *dest_trig) {
+  assert(src_trig);
+  assert(dest_trig);
+
+  assert(src_trig->data);
+  assert(dest_trig->data);
+
+  assert(src_trig->rows == dest_trig->rows);
+
+  for (int i = 0; i < GET_ARR_LEN(dest_trig->rows); i++)
+    dest_trig->data[i] = -src_trig->data[i];
+}
+
+
+void sumTrigs(const TrigArri *src_trig, TrigArri *dest_trig) {
+  assert(src_trig);
+  assert(dest_trig);
+
+  assert(src_trig->data);
+  assert(dest_trig->data);
+
+  assert(src_trig->rows == dest_trig->rows);
+
+  for (int i = 0; i < GET_ARR_LEN(dest_trig->rows); i++)
+    dest_trig->data[i] += src_trig->data[i];
+}
+
+void substractTrigs(const TrigArri *src_trig, TrigArri *dest_trig) {
+  assert(src_trig);
+  assert(dest_trig);
+
+  assert(src_trig->data);
+  assert(dest_trig->data);
+
+  assert(src_trig->rows == dest_trig->rows);
+
+  for (int i = 0; i < GET_ARR_LEN(dest_trig->rows); i++)
+    dest_trig->data[i] += -src_trig->data[i];
+}
+
+void swapTrigs(TrigArri *trig1, TrigArri *trig2) {
+  assert(trig1);
+  assert(trig2);
+
+  assert(trig1->data);
+  assert(trig2->data);
+
+  assert(trig1->rows == trig2->rows);
+
+  for (int i = 0; i < GET_ARR_LEN(trig1->rows); i++) {
+    int temp = trig1->data[i];
+    trig1->data[i] = trig2->data[i];
+    trig2->data[i] = temp;
+  }
 }
