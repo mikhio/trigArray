@@ -1,51 +1,21 @@
 #include <stdio.h>
 #include <assert.h>
-
-//const int SIZE_OF_CELL = 4;
-
-int getElement(int *trig_arr, size_t trig_rows, size_t x, size_t y) {
-  assert(y < trig_rows);
-
-  size_t row_len = y + 1;
-  assert(x < row_len);
-
-  size_t arifm_sum = (1 + y) * y / 2;
-
-  return *(trig_arr + arifm_sum + x);
-}
-
-void printTrig(int *trig_arr, size_t trig_rows) {
-  size_t row_len = 0;
-
-  for (size_t y = 0; y < trig_rows; y++) {
-    row_len = y + 1;
-
-    for (int i = 0; i < row_len; i++)
-      printf("+ -- ");
-    printf("+\n");
-
-    printf("|");
-    for (size_t x = 0; x < row_len; x++) {
-      printf("%4d|", getElement(trig_arr, trig_rows, x, y));
-    }
-    printf("\n");
-  }
-
-  for (int i = 0; i < row_len; i++)
-    printf("+ -- ");
-  printf("+\n");
-}
+#include "TrigArri.h"
 
 int main(int argc, char **argv) {
-  int trig_arr[] = {
+  int data[] = {
     10,
     20, 30,
     40, 50, 60,
-    70, 80, 90, 100
+    70, 80, 90, 100,
+    70, 80, 90, 100, 200
   };
-  size_t trig_rows = 4;
+  size_t data_rows = 6;
 
-  printTrig(trig_arr, trig_rows);
+  TrigArri trig_arr = {};
+  createTrig(&trig_arr, data, data_rows);
+
+  printTrig(&trig_arr);
 
   return 0;
 }
